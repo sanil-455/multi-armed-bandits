@@ -24,7 +24,7 @@ Referred: kamenbliznashki/sutton_barto (fig_2_3() in ch02_ten_armed_testbed.py)
 identical configuration (Q1=[5,0], eps=[0,0.1], step_size=0.1) and identical constant-step-size
 the update rule has been confirmed independently by reading the actual source code.
 
-## Main: uses constant step-size alpha=0.1, NOT the 1/N sample-average from
+ Main: uses constant step-size alpha=0.1, NOT the 1/N sample-average from
 1st chapter -- sample-averaging would erase the optimistic initial value after just one pull of each arm,
 since step-size = 1/N = 1 on the very first pull.
 
