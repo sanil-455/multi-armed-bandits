@@ -1,17 +1,9 @@
-# Multi-Armed Bandits — From First Principles
-
-Personal implementation + study repo for classical and contextual bandit algorithms,
-built while studying for [research area/professor's lab].
-
-Every algorithm here is implemented from its original paper/textbook chapter
-(cited below), then cross-checked against at least one independent open-source
-implementation to catch mistakes. No algorithm is copy-pasted from another repo.
-
+ ## Multi-Armed Bandits — From First Principles
+ 
 ## Progression
 
-Greedy → ε-greedy → Optimistic Initialization → UCB1 → Thompson Sampling → Softmax → EXP3 → LinUCB
 
- Greedy & ε-greedy
+## Greedy & ε-greedy
 
 **Theory source:** Sutton & Barto, *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 2.
 
@@ -25,14 +17,14 @@ Greedy → ε-greedy → Optimistic Initialization → UCB1 → Thompson Samplin
 **Result:** ε=0.1 reaches ~80% optimal action by step 1000; greedy (ε=0) plateaus at ~35% and never
 improves further because it has no mechanism to revisit a bad early commitment. See `results/lesson1_plot.png`.
 
-Optimistic Initial Values
+## Optimistic Initial Values
 
-Sutton & Barto, Chapter 2, Section 2.6.
+## Sutton & Barto, Chapter 2, Section 2.6.
 Referred: kamenbliznashki/sutton_barto (fig_2_3() in ch02_ten_armed_testbed.py)
 identical configuration (Q1=[5,0], eps=[0,0.1], step_size=0.1) and identical constant-step-size
 the update rule has been confirmed independently by reading the actual source code.
 
-Main: uses constant step-size alpha=0.1, NOT the 1/N sample-average from
+## Main: uses constant step-size alpha=0.1, NOT the 1/N sample-average from
 1st chapter -- sample-averaging would erase the optimistic initial value after just one pull of each arm,
 since step-size = 1/N = 1 on the very first pull.
 
