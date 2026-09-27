@@ -1,11 +1,12 @@
 import numpy as np
 
 class UCB1Agent:
-    def __init__(self, k):
+    def __init__(self, k,rng=None):
         self.k = k # arm counts
         self.t = 0 # total no.of arm pulls made so far(global count)
         self.N = np.zeros(k, dtype=int) # arm pulls of particular arm unlike t which is global count
         self.Q = np.zeros(k) # current sample avg. reward estimate per arm
+        self.rng = rng if rng is not None else np.random.default_rng()
 
     def select_action(self):
 	# check if any arm not tried
@@ -21,7 +22,7 @@ class UCB1Agent:
         ucb_index = self.Q + confidence_bonus
         max_index = np.max(ucb_index)
         candidates = np.flatnonzero(ucb_index == max_index)
-        return np.random.choice(candidates)
+        return self.rng.choice(candidates)
 
     def update(self, action, reward):
         self.t += 1
