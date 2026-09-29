@@ -17,7 +17,7 @@ improves further because it has no mechanism to revisit a bad early commitment. 
 
 ## Optimistic Initial Values
 
-## Sutton & Barto, Chapter 2, Section 2.6.
+Sutton & Barto, Chapter 2, Section 2.6.
 Referred: kamenbliznashki/sutton_barto (fig_2_3() in ch02_ten_armed_testbed.py)
 identical configuration (Q1=[5,0], eps=[0,0.1], step_size=0.1) and identical constant-step-size
 the update rule has been confirmed independently by reading the actual source code.
