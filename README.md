@@ -1,4 +1,4 @@
- ## Multi-Armed Bandits — From First Principles
+ ## Multi-Armed Bandits 
  
 ## Progression
 
