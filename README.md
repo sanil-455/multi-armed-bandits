@@ -1,7 +1,5 @@
  ## Multi-Armed Bandits 
  
-## Progression
-
 
 ## Greedy & ε-greedy
 
