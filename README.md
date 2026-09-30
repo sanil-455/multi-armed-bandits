@@ -137,4 +137,5 @@ Result (500 runs x 1000 steps, k=10, d=5)
 - UCB1 lands below random, which makes sense: it converges on whichever arm looks best averaged
 over all contexts and then commits to it, and committing to one fixed answer is worse than
 guessing when the right answer changes every round. Clearest demonstration in this repo of why
-contextual bandits needed to exist. See results/lesson7_plot.png.
+contextual bandits needed to exist.
+results/lesson7_plot.png.
