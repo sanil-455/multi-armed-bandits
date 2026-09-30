@@ -10,8 +10,9 @@
 - `algorithms/epsilon_greedy.py` — incremental sample-average estimator + ε-greedy action selection
 - `experiments/lesson1_greedy_vs_epsilon.py` — reproduces S&B Fig 2.2 (2000 runs × 1000 steps)
 
-**Result:** ε=0.1 reaches ~80% optimal action by step 1000; greedy (ε=0) plateaus at ~35% and never
-improves further because it has no mechanism to revisit a bad early commitment. See `results/lesson1_plot.png`.
+**Result:** ε=0.1 reaches almost 80% optimal action by step 1000; greedy (ε=0) plateaus at ~35% and never
+improves further because it has no mechanism to revisit a bad early commitment. 
+`results/lesson1_plot.png`.
 
 ## Optimistic Initial Values
 
@@ -20,7 +21,7 @@ identical configuration (Q1=[5,0], eps=[0,0.1], step_size=0.1) and identical con
 the update rule has been confirmed independently by reading the actual source code.
 
  Main: uses constant step-size alpha=0.1, NOT the 1/N sample-average from
-1st chapter -- sample-averaging would erase the optimistic initial value after just one pull of each arm,
+1st chapter,sample-averaging would erase the optimistic initial value after just one pull of each arm,
 since step-size = 1/N = 1 on the very first pull.
 
 Result (2000 runs x 1000 steps, k=10)
@@ -44,7 +45,8 @@ Result (2000 runs x 1000 steps, k=10)
 - eps-greedy (eps=0.1): 80.03%, optimistic greedy: 87.21%, UCB1: 90.31% optimal by step 1000
 - UCB1 wins because its exploration is aimed at genuinely uncertain arms and never fully
 switches off, unlike eps-greedy's permanent uniform randomness or optimistic-greedy's
-one-time decaying trick. See results/lesson3_plot.png.
+one-time decaying trick.
+results/lesson3_plot.png.
 
 ## Thompson Sampling
 
@@ -58,7 +60,7 @@ and Trends in Machine Learning 11(1). https://arxiv.org/abs/1707.02038
 Main: new BernoulliBandit environment, since Thompson Sampling needs binary rewards unlike the
 Gaussian environment used earlier. Every arm starts at Beta(1,1), the uniform distribution,
 meaning no prior belief at all. After each pull alpha increases on a success and beta on a
-failure -- the standard Beta-Bernoulli conjugate update. Instead of one point estimate per arm
+failure,the standard Beta-Bernoulli conjugate update. Instead of one point estimate per arm
 it keeps a whole distribution, samples one value from each arm's distribution every round, and
 picks whichever sample came out highest, so arms it is still uncertain about get explored
 naturally.
@@ -76,7 +78,7 @@ Cesa-Bianchi, Gentile, Lugosi, Neu (2017), Boltzmann Exploration Done Right, Neu
 https://arxiv.org/abs/1705.10257
 
 The paper shows the usual way people implement Boltzmann exploration, with one shared learning
-rate for all arms, is basically no better than eps-greedy -- any schedule either gets stuck or
+rate for all arms, is basically no better than eps-greedy, any schedule either gets stuck or
 explores forever. Their fix is Boltzmann-Gumbel Exploration: give each arm its own random
 Gumbel noise, scaled down as that arm gets pulled more, added on top of its plain average.
 
@@ -87,15 +89,16 @@ extra log T factor compared to UCB1's.
 
 Also tried building the heavier Theorem 5 version (a Catoni-based estimator meant to resist
 outlier rewards) and testing it on a heavy-tailed environment. It did not come out clearly
-better than plain BGE or UCB1 in this run -- most likely needs more runs and a better-tuned
-constant to show the effect. See results/lesson5_plot.png.
+better than plain BGE or UCB1 in this run,most likely needs more runs and a better-tuned
+constant to show the effect.
+results/lesson5_plot.png.
 
 ## EXP3
 
 Auer, Cesa-Bianchi, Freund, Schapire (2002), The Nonstochastic Multiarmed Bandit Problem,
 SIAM Journal on Computing 32(1), 48-77.
 
-No assumption at all about how rewards are generated -- built for a setting where an adversary
+No assumption at all about how rewards are generated,built for a setting where an adversary
 controls the payoffs. Keeps a weight per arm instead of a value estimate, mixes in a flat
 gamma/K of forced exploration on top of the weighted probabilities, and corrects for only
 seeing one arm's reward per round by dividing by the probability that arm had of being picked.
@@ -106,12 +109,13 @@ partway through the run (step 500 of 1000).
 Result (2000 runs x 1000 steps, k=10, change at step 500)
 - UCB1: 85.69% just before the change, 50.54% average after
 - EXP3: 66.46% just before the change, 25.80% average after
-- EXP3 did worse, not better. Checked this was not a bug -- tested bounded rewards and swept
+- EXP3 did worse, not better. Checked this was not a bug,tested bounded rewards and swept
 gamma including the paper's own theoretically optimal value (0.164 for these settings), which
 only reached 69.82%. So it is real: EXP3's sqrt(T) bound is genuinely weaker in absolute terms
 than UCB1's log T bound at this horizon, UCB1 already re-explores somewhat since its confidence
 term keeps growing with total time, and a single scheduled change point is not the reactive
-adversarial setting EXP3 is actually built to guarantee against. See results/lesson6_plot.png.
+adversarial setting EXP3 is actually built to guarantee against.
+results/lesson6_plot.png.
 
 ## LinUCB
 
@@ -121,7 +125,7 @@ Recommendation, WWW 2010. https://arxiv.org/abs/1003.0146
 First algorithm here that gets to see a context vector before choosing. Assumes reward is
 linear in the context features, keeps a ridge regression per arm (A starts as the d x d
 identity, b as a zero vector), and picks the arm maximising predicted reward plus a confidence
-width alpha * sqrt(x' A^-1 x) -- the same estimate-plus-uncertainty shape as UCB1, but the
+width alpha * sqrt(x' A^-1 x), the same estimate-plus-uncertainty shape as UCB1, but the
 uncertainty is now measured in feature space rather than just a pull count.
 
 New environment: environments/contextual_bandit.py, where each arm has its own secret
