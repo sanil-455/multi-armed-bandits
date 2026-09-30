@@ -35,9 +35,7 @@ exploration tax forever.
 Auer, Cesa-Bianchi and Fischer, Finite-time Analysis of the Multiarmed Bandit Problem,
 Machine Learning 47, 2002. https://homes.di.unimi.it/~cesabian/Pubblicazioni/ml-02.pdf
 
-Referred: SMPyBandits' UCB.computeAllIndex(),identical formula with the coefficient fixed
-at sqrt(2), confirming this is the paper's exact UCB1 and not Sutton & Barto's more general
-tunable-c variant (S&B eq 2.10 uses Q(a) + c*sqrt(ln t / N(a)) with c left free).
+Implementation verification: Formula and initialization were independently cross-checked against the SMPyBandits implementation..
 
 Main: every arm is played once before the confidence-bound formula is used at all, exactly as
 the paper states, to avoid dividing by zero when N(a) = 0.
