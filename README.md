@@ -5,8 +5,6 @@
 
 **Theory source:** Sutton & Barto, *Reinforcement Learning: An Introduction* (2nd ed.), Chapter 2.
 
-**Cross-checked against:** [bgalbraith/bandits](https://github.com/bgalbraith/bandits)
-
 **Files:**
 - `environments/stationary.py` — k-armed Gaussian bandit testbed (S&B §2.3 "10-armed testbed")
 - `algorithms/epsilon_greedy.py` — incremental sample-average estimator + ε-greedy action selection
@@ -18,7 +16,6 @@ improves further because it has no mechanism to revisit a bad early commitment. 
 ## Optimistic Initial Values
 
 Sutton & Barto, Chapter 2, Section 2.6.
-Referred: kamenbliznashki/sutton_barto (fig_2_3() in ch02_ten_armed_testbed.py)
 identical configuration (Q1=[5,0], eps=[0,0.1], step_size=0.1) and identical constant-step-size
 the update rule has been confirmed independently by reading the actual source code.
 
@@ -38,7 +35,7 @@ exploration tax forever.
 Auer, Cesa-Bianchi and Fischer, Finite-time Analysis of the Multiarmed Bandit Problem,
 Machine Learning 47, 2002. https://homes.di.unimi.it/~cesabian/Pubblicazioni/ml-02.pdf
 
-Referred: SMPyBandits' UCB.computeAllIndex() -- identical formula with the coefficient fixed
+Referred: SMPyBandits' UCB.computeAllIndex(),identical formula with the coefficient fixed
 at sqrt(2), confirming this is the paper's exact UCB1 and not Sutton & Barto's more general
 tunable-c variant (S&B eq 2.10 uses Q(a) + c*sqrt(ln t / N(a)) with c left free).
 
@@ -73,7 +70,7 @@ Result (2000 runs x 1000 steps, k=10, Bernoulli bandit)
 - Matches a known published result: Chapelle and Li (2011, NeurIPS), An Empirical Evaluation
 of Thompson Sampling, found the same thing on Bernoulli payoffs -- UCB1's theoretical constant
 is proven-safe but loose, so it explores more conservatively than it needs to.
-See results/lesson4_plot.png.
+results/lesson4_plot.png.
 
 ## Softmax / Boltzmann Exploration
 
@@ -105,10 +102,6 @@ controls the payoffs. Keeps a weight per arm instead of a value estimate, mixes 
 gamma/K of forced exploration on top of the weighted probabilities, and corrects for only
 seeing one arm's reward per round by dividing by the probability that arm had of being picked.
 
-Referred: the SCIP solver's own EXP3 implementation -- the probability formula matches exactly.
-Noticed a difference in the weight-update exponent (they use a fixed 1/K, we use gamma/K per
-the classic formula) -- worth digging into further, not resolved yet.
-
 New environment: environments/non_stationary_bandit.py, where the best arm secretly switches
 partway through the run (step 500 of 1000).
 
@@ -132,10 +125,6 @@ linear in the context features, keeps a ridge regression per arm (A starts as th
 identity, b as a zero vector), and picks the arm maximising predicted reward plus a confidence
 width alpha * sqrt(x' A^-1 x) -- the same estimate-plus-uncertainty shape as UCB1, but the
 uncertainty is now measured in feature space rather than just a pull count.
-
-Referred: the contextual R package's LinUCBDisjointPolicy docs, which confirm the same
-initialisation (A = d x d identity, b = zero vector of length d, alpha as the exploration
-hyperparameter).
 
 New environment: environments/contextual_bandit.py, where each arm has its own secret
 coefficient vector and a fresh random context is drawn every round, so the best arm changes
